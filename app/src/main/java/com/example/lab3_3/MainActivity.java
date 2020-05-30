@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText3;
     private EditText editText4;
     private TextView textResult;
+    int numberOfMutations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             if(result == null) textResult.setText("Вибачте, алгоритм не знайшов відповіді.");
             else {
                 textResult = findViewById(R.id.outputText);
-                textResult.setText("Результат: (" + result[0] + ", " + result[1] + ", " + result[2] + ")");
+                textResult.setText("Результат: (" + result[0] + ", " + result[1] + ", " + result[2] + ")\n Кількість мутацій: " + numberOfMutations);
             }
         }
     }
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             arrChromo.add(new Chromosome());
         }
         for (int tryP = 0; tryP < 10; tryP++) {
+            numberOfMutations = 0;
             for (int i = 0; i < 4; i++) {
                 arrChromo.get(i).randomiseGens(y);
             }
@@ -102,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 if (rand.nextInt(10 + 1) < 5) {
                     swap = rand.nextInt(3 + 1);
                     arrChromo.get(swap).b = arrChromo.get(swap).b ^ (arrChromo.get(3).b >> 1);
+                    numberOfMutations++;
                 }
                 for (int i = 0; i < 4; i++) {
                     arrChromo.get(i).progeny();
